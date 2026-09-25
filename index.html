@@ -5,6 +5,11 @@
     <!-- Forcing desktop view on all devices by setting a fixed viewport width -->
     <meta name="viewport" content="width=1366">
     <title>Documento Comercial & ERP - Multilingue e Impostos</title>
+    
+    <!-- Webpage Icon (Favicon) - Modern Neon ERP Invoice Badge -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0f1e'/%3E%3Cpath d='M30 20h28l16 16v44a6 6 0 0 1-6 6H30a6 6 0 0 1-6-6V26a6 6 0 0 1 6-6z' fill='none' stroke='%2300f3ff' stroke-width='6' stroke-linejoin='round'/%3E%3Cpath d='M58 20v16h16' fill='none' stroke='%2300f3ff' stroke-width='6' stroke-linejoin='round'/%3E%3Cline x1='38' y1='48' x2='62' y2='48' stroke='%2300f3ff' stroke-width='5' stroke-linecap='round'/%3E%3Cline x1='38' y1='58' x2='62' y2='58' stroke='%2300f3ff' stroke-width='5' stroke-linecap='round'/%3E%3Cline x1='38' y1='68' x2='50' y2='68' stroke='%2300f3ff' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+    <link rel="alternate icon" type="image/png" href="https://img.icons8.com/color/96/000000/bill.png">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -179,7 +184,7 @@
             background: repeating-radial-gradient(circle at 0 0, transparent 0, transparent 10px, rgba(0,0,0,0.02) 10px, rgba(0,0,0,0.02) 20px);
         }
 
-        /* NOVOS TEMPLATES VETORIAIS DE ESTILO MAGNIFIC WORD INVOICE */
+        /* TEMPLATES VETORIAIS DE ESTILO MAGNIFIC WORD INVOICE */
         .template-corp-wave::before {
             opacity: 1;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1200' preserveAspectRatio='none'%3E%3Cpath fill='%230284c7' opacity='0.12' d='M0 0h1000v180L600 120 0 200Z'/%3E%3Cpath fill='%230369a1' opacity='0.2' d='M0 0h1000v130L450 90 0 160Z'/%3E%3Cpath fill='%230f172a' opacity='0.85' d='M0 0h1000v40L300 25 0 35Z'/%3E%3Cpath fill='%230284c7' opacity='0.15' d='M0 1200h1000v-90L400 1150 0 1110Z'/%3E%3C/svg%3E");
@@ -246,30 +251,85 @@
         }
         [contenteditable="true"]:empty { min-width: 50px; min-height: 1em; display: inline-block; }
 
+        /* STRICT AD & INTERFACE ISOLATION DURING PRINTING */
         @media print {
-            body > *:not(#printAreaWrapper) { display: none !important; }
+            /* Hide all UI controls, sidebars, modals, ads, floating banners, and social bars */
+            .no-print,
+            #controlsSidebar,
+            #adsSidebar,
+            #dashboardModal,
+            #customModal,
+            #toastNotification,
+            iframe,
+            [id*="container-"],
+            [id*="pl30778021"],
+            [class*="socialbar"],
+            [id*="socialbar"],
+            [class*="ad-"],
+            [id*="ad-"],
+            div[style*="position: fixed"],
+            div[style*="position: absolute"]:not(#printAreaWrapper *):not(#printArea *) {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                height: 0 !important;
+                width: 0 !important;
+                overflow: hidden !important;
+            }
+
+            body > *:not(#printAreaWrapper) {
+                display: none !important;
+            }
             
             #printAreaWrapper {
-                display: block !important; width: 100% !important; height: 100% !important;
-                margin: 0 !important; padding: 0 !important; background: #ffffff !important;
+                display: block !important;
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #ffffff !important;
+                box-shadow: none !important;
+                overflow: visible !important;
             }
-            #dashboardModal, #customModal { display: none !important; } 
 
-            html { font-size: 16px !important; background: #ffffff !important; }
+            #printAreaWrapper > *:not(#printArea) {
+                display: none !important;
+                visibility: hidden !important;
+            }
+
+            html {
+                font-size: 16px !important;
+                background: #ffffff !important;
+            }
+
             html, body {
-                width: 100% !important; max-width: 100% !important; height: auto !important;
-                margin: 0 !important; padding: 0 !important; background: #ffffff !important;
-                background-image: none !important; -webkit-print-color-adjust: exact !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #ffffff !important;
+                background-image: none !important;
+                -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            body { font-family: 'Segoe UI', Arial, Tahoma, sans-serif !important; font-size: 8.5pt !important; line-height: 1.02 !important; color: #000000 !important; }
-            
-            /* Hides any ads globally during print/pdf generation */
-            .no-print { display: none !important; }
+
+            body {
+                font-family: 'Segoe UI', Arial, Tahoma, sans-serif !important;
+                font-size: 8.5pt !important;
+                line-height: 1.02 !important;
+                color: #000000 !important;
+            }
 
             .print-page {
-                box-shadow: none !important; margin: 0 !important; padding: 0.45in 0.5in !important;
-                width: 8.5in !important; height: 11in !important; border: none !important;
+                box-shadow: none !important;
+                margin: 0 auto !important;
+                padding: 0.45in 0.5in !important;
+                width: 8.5in !important;
+                height: 11in !important;
+                border: none !important;
+                page-break-inside: avoid !important;
+                page-break-after: avoid !important;
             }
 
             [contenteditable="true"]:empty:before { display: none !important; }
@@ -445,7 +505,7 @@
             <button onclick="saveDocument()" class="w-full bg-emerald-700 hover:bg-emerald-600 border border-emerald-500 rounded py-2 text-xs text-white transition-colors text-center font-bold shadow-md">
                 <i class="fas fa-save mr-1.5"></i> <span data-i18n="save_doc">Guardar Documento</span>
             </button>
-            <button onclick="window.print()" class="w-full bg-cyan-600 hover:bg-cyan-500 neon-border-cyan rounded py-2.5 font-bold text-xs transition-all text-center text-white">
+            <button onclick="triggerPrint()" class="w-full bg-cyan-600 hover:bg-cyan-500 neon-border-cyan rounded py-2.5 font-bold text-xs transition-all text-center text-white">
                 <i class="fas fa-print mr-1.5"></i> <span data-i18n="print_doc">Imprimir Documento</span>
             </button>
             <button onclick="confirmClearData()" class="w-full bg-red-950/80 hover:bg-red-900 border border-red-800 rounded py-1.5 text-xs text-red-300 transition-colors text-center">
@@ -634,7 +694,7 @@ NUIT / NIF Cliente: 000000000</div>
         </div>
     </div>
 
-    <!-- BARRA LATERAL DIREITA DE ANÚNCIOS (160x600 Organizado) - Fixed to be visible everywhere by removing hidden classes -->
+    <!-- BARRA LATERAL DIREITA DE ANÚNCIOS (160x600 Organizado) -->
     <div id="adsSidebar" class="no-print w-[200px] h-full bg-slate-900 border-l border-gray-800 flex flex-col z-40 p-4 overflow-y-auto shrink-0 items-center">
         <div class="flex items-center space-x-2 text-gray-400 mb-6 w-full justify-center border-b border-gray-800 pb-2">
             <i class="fas fa-ad text-sm"></i>
@@ -656,10 +716,9 @@ NUIT / NIF Cliente: 000000000</div>
         </div>
     </div>
 
-    <!-- Hiden Ads / Popunders / Tracking Scripts (Estritamente sem layout) -->
-    <div class="no-print hidden" aria-hidden="true">
+    <!-- Hidden Ads / Social Bar / Popunders / Tracking Scripts (Shows during document editing only) -->
+    <div class="no-print hidden" aria-hidden="true" id="socialBarAdsContainer">
         <script src="https://pl30778021.profitableratecpmnetwork.com/78/fa/00/78fa00cf4dcda3dedf40132f76226af6.js"></script>
-        
         <script async="async" data-cfasync="false" src="https://pl30778022.profitableratecpmnetwork.com/edbac03e0788a019f72e8767b9dc91d4/invoke.js"></script>
         <div id="container-edbac03e0788a019f72e8767b9dc91d4"></div>
     </div>
@@ -695,7 +754,7 @@ NUIT / NIF Cliente: 000000000</div>
         </div>
     </div>
 
-    <!-- MODAL DE CONFIRMAÇÃO DA INTERFACE (SEM ALERT/CONFIRM) -->
+    <!-- MODAL DE CONFIRMAÇÃO DA INTERFACE -->
     <div id="customModal" class="fixed inset-0 bg-black/80 z-[120] hidden items-center justify-center backdrop-blur-sm no-print p-4">
         <div class="bg-slate-900 border border-slate-700 rounded-lg w-full max-w-md p-5 text-white shadow-2xl space-y-4">
             <h3 class="text-base font-bold flex items-center text-amber-400" id="modalTitle"><i class="fas fa-exclamation-triangle mr-2"></i> Confirmação</h3>
@@ -778,7 +837,7 @@ NUIT / NIF Cliente: 000000000</div>
                 exclude_tax_toggle: "Exento de Impuesto (0%)", tax_calculation_mode: "Cálculo de Impuestos", tax_exclusive: "Excluido (Añadir)", tax_inclusive: "Incluido en Precio",
                 tax_rate: "Impuesto Estándar", intl_tax: "Imp. Internac. (%)", intl_tax_label: "Impuesto Internacional",
                 add_row: "Añadir Fila", add_bank: "Añadir Banco", template_style: "Plantilla de Fondo",
-                temp_none: "Ninguno", temp_corp_wave: "Vector Onda Corporativa", temp_geometric: "Geométrico Poligonal", temp_tech_hex: "Malla Hexagonal Tech", temp_fluid_orange: "Fluido Naranja Moderno", temp_architect: "Marco Arquitectura", temp_indigo_ribbon: "Cinta Índigo Elegante", temp_dot_matrix: "Matriz de Puntos", temp_luxury_gold: "Lujo Dorado", temp_emerald_geo: "Esmeralda Geométrico", temp_stripes: "Líneas", temp_bubbles: "Burbujas", temp_waves: "Ondas Clásicas",
+                temp_none: "Ninguno", temp_corp_wave: "Vector Onda Corporativa", temp_geometric: "Geométrico Poligonal", temp_tech_hex: "Malla Hexagonal Tech", temp_fluid_orange: "Fluido Naranja Moderno", temp_architect: "Marco Arquitectura", temp_indigo_ribbon: "Cinta Índigo Elegante", temp_dot_matrix: "Matriz de Puntos", temp_luxury_gold: "Lujo Dorado", temp_emerald_geo: "Esmeralda Geométrico", temp_stripes: "Líneas", temp_bubbles: "Burbujas", temp_waves: "Ondas Clássicas",
                 save_doc: "Guardar Documento", print_doc: "Imprimir Documento", clear_data: "Limpiar Datos", click_logo: "Clic para Logo\n(Rectangular)",
                 doc_number: "Nº Documento:", date: "Fecha:", due_date: "Vencimiento:", bill_to: "Facturar a:", related_invoice: "Ref. Factura Nº:",
                 qty: "Cant", description: "Descripción del Artículo", unit: "Unid.", price: "Precio", discount: "Desc(%)", tax: "Imp.", total: "Total",
@@ -881,7 +940,7 @@ NUIT / NIF Cliente: 000000000</div>
             }
         };
 
-        // COUNTRY TAX PRESETS DATA (TRANSLATED TO ENGLISH)
+        // COUNTRY TAX PRESETS DATA
         const countryTaxPresets = {
             MZ: { rate: 16, acronym: "IVA", name: "Mozambique" },
             PT: { rate: 23, acronym: "IVA", name: "Portugal" },
@@ -931,6 +990,10 @@ NUIT / NIF Cliente: 000000000</div>
             if(dueDateDoc && (dueDateDoc.innerText === '25/10/2026' || dueDateDoc.innerText === '')) {
                 dueDateDoc.innerText = nextMonth.toLocaleDateString('pt-PT');
             }
+
+            // Register print listeners to hide dynamically injected social bars / ad popups
+            window.addEventListener('beforeprint', hideAllAdsForPrint);
+            window.addEventListener('afterprint', restoreAdsAfterPrint);
         });
 
         function initApp() {
@@ -941,6 +1004,58 @@ NUIT / NIF Cliente: 000000000</div>
             updateDocType();
             updateStatus();
             applyCountryTaxPreset('MZ');
+        }
+
+        // TRIGGER CLEAN PRINT OPERATION
+        function triggerPrint() {
+            hideAllAdsForPrint();
+            setTimeout(() => {
+                window.print();
+            }, 100);
+        }
+
+        // HIDE ALL DYNAMIC SOCIAL BARS, FLOATING POPUPS & AD CONTAINERS FOR PRINTING
+        function hideAllAdsForPrint() {
+            // Hide elements with no-print class or dynamic ad indicators
+            const allElements = document.querySelectorAll('.no-print, [id*="container-"], [id*="pl30778021"], [class*="socialbar"], [id*="socialbar"], iframe');
+            allElements.forEach(el => {
+                if (el) {
+                    el.dataset.prevDisplay = el.style.display;
+                    el.style.setProperty('display', 'none', 'important');
+                }
+            });
+
+            // Iterate over direct body children to isolate #printAreaWrapper
+            Array.from(document.body.children).forEach(child => {
+                if (child.id !== 'printAreaWrapper') {
+                    child.dataset.prevBodyChildDisplay = child.style.display;
+                    child.style.setProperty('display', 'none', 'important');
+                }
+            });
+        }
+
+        // RESTORE ADS FOR EDITING AFTER PRINTING
+        function restoreAdsAfterPrint() {
+            const allElements = document.querySelectorAll('.no-print, [id*="container-"], [id*="pl30778021"], [class*="socialbar"], [id*="socialbar"], iframe');
+            allElements.forEach(el => {
+                if (el && el.dataset.prevDisplay !== undefined) {
+                    el.style.display = el.dataset.prevDisplay;
+                    delete el.dataset.prevDisplay;
+                } else if (el) {
+                    el.style.display = '';
+                }
+            });
+
+            Array.from(document.body.children).forEach(child => {
+                if (child.id !== 'printAreaWrapper') {
+                    if (child.dataset.prevBodyChildDisplay !== undefined) {
+                        child.style.display = child.dataset.prevBodyChildDisplay;
+                        delete child.dataset.prevBodyChildDisplay;
+                    } else {
+                        child.style.display = '';
+                    }
+                }
+            });
         }
 
         // DYNAMIC TRANSLATION SWITCHER
@@ -1309,7 +1424,7 @@ NUIT / NIF Cliente: 000000000</div>
                     <td class="px-3 py-2">${doc.client}</td>
                     <td class="px-3 py-2">${doc.date}</td>
                     <td class="px-3 py-2 font-mono font-semibold">${doc.total}</td>
-                    <td class="px-3 py-2"><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${statusColor} "  >${doc.status}</span></td>
+                    <td class="px-3 py-2"><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${statusColor}">${doc.status}</span></td>
                     <td class="px-3 py-2 text-right">
                         <button onclick="deleteDoc('${doc.id}')" class="text-red-400 hover:text-red-300 p-1" title="Apagar"><i class="fas fa-trash"></i></button>
                     </td>
@@ -1364,7 +1479,7 @@ NUIT / NIF Cliente: 000000000</div>
             addBank();
         }
 
-        // MODAL CUSTOMIZADO E TOASTS (SEM USAR ALERT/CONFIRM)
+        // MODAL CUSTOMIZADO E TOASTS
         function openCustomModal(title, message, onConfirm) {
             const modal = document.getElementById('customModal');
             document.getElementById('modalTitle').innerHTML = `<i class="fas fa-exclamation-triangle mr-2"></i> ${title}`;
