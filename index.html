@@ -2,7 +2,8 @@
 <html lang="pt" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Forcing desktop view on all devices by setting a fixed viewport width -->
+    <meta name="viewport" content="width=1366">
     <title>Documento Comercial & ERP - Multilingue e Impostos</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -263,6 +264,7 @@
             }
             body { font-family: 'Segoe UI', Arial, Tahoma, sans-serif !important; font-size: 8.5pt !important; line-height: 1.02 !important; color: #000000 !important; }
             
+            /* Hides any ads globally during print/pdf generation */
             .no-print { display: none !important; }
 
             .print-page {
@@ -356,18 +358,18 @@
             <div>
                 <label class="block text-[11px] text-gray-300 mb-0.5" data-i18n="select_country">Seleccionar País</label>
                 <select id="countrySelect" onchange="applyCountryTaxPreset(this.value);" class="w-full bg-gray-800 border border-gray-600 rounded p-1.5 text-xs text-white focus:border-cyan-400 outline-none">
-                    <option value="MZ">Moçambique (IVA 16%)</option>
+                    <option value="MZ">Mozambique (IVA 16%)</option>
                     <option value="PT">Portugal (IVA 23%)</option>
-                    <option value="ES">Espanha (IVA 21%)</option>
-                    <option value="FR">França (TVA 20%)</option>
-                    <option value="DE">Alemanha (MwSt 19%)</option>
-                    <option value="UK">Reino Unido (VAT 20%)</option>
-                    <option value="US">Estados Unidos (Sales Tax 7%)</option>
-                    <option value="SA">Arábia Saudita (VAT 15%)</option>
-                    <option value="AE">Emirados Árabes (VAT 5%)</option>
-                    <option value="ZA">África do Sul (VAT 15%)</option>
-                    <option value="BR">Brasil (Imposto ~18%)</option>
-                    <option value="CUSTOM">Outro / Personalizado</option>
+                    <option value="ES">Spain (IVA 21%)</option>
+                    <option value="FR">France (TVA 20%)</option>
+                    <option value="DE">Germany (MwSt 19%)</option>
+                    <option value="UK">United Kingdom (VAT 20%)</option>
+                    <option value="US">United States (Sales Tax 7%)</option>
+                    <option value="SA">Saudi Arabia (VAT 15%)</option>
+                    <option value="AE">United Arab Emirates (VAT 5%)</option>
+                    <option value="ZA">South Africa (VAT 15%)</option>
+                    <option value="BR">Brazil (Tax ~18%)</option>
+                    <option value="CUSTOM">Custom / Other</option>
                 </select>
             </div>
 
@@ -632,8 +634,8 @@ NUIT / NIF Cliente: 000000000</div>
         </div>
     </div>
 
-    <!-- BARRA LATERAL DIREITA DE ANÚNCIOS (160x600 Organizado) -->
-    <div id="adsSidebar" class="no-print w-[200px] h-full bg-slate-900 border-l border-gray-800 hidden xl:flex flex-col z-40 p-4 overflow-y-auto shrink-0 items-center">
+    <!-- BARRA LATERAL DIREITA DE ANÚNCIOS (160x600 Organizado) - Fixed to be visible everywhere by removing hidden classes -->
+    <div id="adsSidebar" class="no-print w-[200px] h-full bg-slate-900 border-l border-gray-800 flex flex-col z-40 p-4 overflow-y-auto shrink-0 items-center">
         <div class="flex items-center space-x-2 text-gray-400 mb-6 w-full justify-center border-b border-gray-800 pb-2">
             <i class="fas fa-ad text-sm"></i>
             <span class="text-xs font-bold uppercase tracking-widest">Patrocínio</span>
@@ -879,19 +881,19 @@ NUIT / NIF Cliente: 000000000</div>
             }
         };
 
-        // COUNTRY TAX PRESETS DATA
+        // COUNTRY TAX PRESETS DATA (TRANSLATED TO ENGLISH)
         const countryTaxPresets = {
-            MZ: { rate: 16, acronym: "IVA", name: "Moçambique" },
+            MZ: { rate: 16, acronym: "IVA", name: "Mozambique" },
             PT: { rate: 23, acronym: "IVA", name: "Portugal" },
-            ES: { rate: 21, acronym: "IVA", name: "España" },
+            ES: { rate: 21, acronym: "IVA", name: "Spain" },
             FR: { rate: 20, acronym: "TVA", name: "France" },
-            DE: { rate: 19, acronym: "MwSt", name: "Deutschland" },
+            DE: { rate: 19, acronym: "MwSt", name: "Germany" },
             UK: { rate: 20, acronym: "VAT", name: "United Kingdom" },
             US: { rate: 7, acronym: "Sales Tax", name: "United States" },
             SA: { rate: 15, acronym: "VAT", name: "Saudi Arabia" },
-            AE: { rate: 5, acronym: "VAT", name: "UAE" },
+            AE: { rate: 5, acronym: "VAT", name: "United Arab Emirates" },
             ZA: { rate: 15, acronym: "VAT", name: "South Africa" },
-            BR: { rate: 18, acronym: "Imposto", name: "Brasil" },
+            BR: { rate: 18, acronym: "Tax", name: "Brazil" },
             CUSTOM: { rate: 16, acronym: "Tax", name: "Custom" }
         };
 
@@ -1307,7 +1309,7 @@ NUIT / NIF Cliente: 000000000</div>
                     <td class="px-3 py-2">${doc.client}</td>
                     <td class="px-3 py-2">${doc.date}</td>
                     <td class="px-3 py-2 font-mono font-semibold">${doc.total}</td>
-                    <td class="px-3 py-2"><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${statusColor}">${doc.status}</span></td>
+                    <td class="px-3 py-2"><span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${statusColor} "  >${doc.status}</span></td>
                     <td class="px-3 py-2 text-right">
                         <button onclick="deleteDoc('${doc.id}')" class="text-red-400 hover:text-red-300 p-1" title="Apagar"><i class="fas fa-trash"></i></button>
                     </td>
